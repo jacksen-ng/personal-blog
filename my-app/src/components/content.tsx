@@ -1,13 +1,13 @@
 export default function Content() {
     return (
         <div className="min-h-screen flex flex-col items-center justify-center px-4">
-            <h1 className="font-heading text-6xl md:text-7xl lg:text-8xl text-center mb-6
-                bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 
-                dark:from-violet-300 dark:via-purple-300 dark:to-indigo-300 
+            <h1 className="font-creative text-6xl md:text-7xl lg:text-8xl text-center mb-6
+                bg-gradient-to-r from-fuchsia-500 to-cyan-500
+                dark:from-fuchsia-300 dark:to-cyan-300
                 bg-clip-text text-transparent
-                hover:from-indigo-600 hover:via-purple-600 hover:to-violet-600 
-                dark:hover:from-indigo-300 dark:hover:via-purple-300 dark:hover:to-violet-300 
-                transition-all duration-500">
+                hover:from-cyan-500 hover:to-fuchsia-500
+                dark:hover:from-cyan-300 dark:hover:to-fuchsia-300
+                transition-all duration-700">
                 Jacksen.blog
             </h1>
 

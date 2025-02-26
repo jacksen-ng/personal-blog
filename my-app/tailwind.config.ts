@@ -16,6 +16,10 @@ const config: Config = {
       fontFamily: {
         'handwriting': ['Caveat', 'Dancing Script', 'Kalam', 'Pacifico', 'Shadows Into Light'],
         'indie': ['Indie Flower', 'Dancing Script', 'Kalam', 'Pacifico', 'Shadows Into Light'],
+        'modern': ['Clash Display', 'Cabinet Grotesk', 'General Sans', 'system-ui'],
+        'elegant': ['Playfair Display', 'Cormorant', 'Libre Baskerville', 'serif'],
+        'creative': ['Righteous', 'Fredoka One', 'Comfortaa', 'cursive'],
+        'tech': ['Space Grotesk', 'Chakra Petch', 'IBM Plex Sans', 'monospace'],
         'heading': ['Pacifico', 'Righteous', 'Fredoka One', 'system-ui', 'sans-serif'],
       },
       animation: {
