@@ -1,10 +1,12 @@
-import Image from "next/image";
+import Background from "@/components/background";
 import Navbar from "@/components/navbar";
-
+import Content from "@/components/content";
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+    <main className="min-h-screen relative">
+      <Background />
       <Navbar />
+      <Content />
     </main>
   );
 }

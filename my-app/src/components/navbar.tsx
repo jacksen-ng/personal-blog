@@ -9,7 +9,6 @@ export default function Navbar() {
     const { theme, setTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
 
-    // 确保主题切换在客户端渲染
     useEffect(() => {
         setMounted(true);
     }, []);
@@ -19,23 +18,23 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="fixed w-full backdrop-blur-md bg-white/75 dark:bg-gray-900/75 shadow-sm z-50">
+        <nav className="fixed w-full z-50">
             <div className="max-w-6xl mx-auto px-4">
                 <div className="flex justify-between">
                     <Link href="/" className="flex items-center py-4 px-2">
-                        <h1 className="font-sans text-2xl font-extrabold bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent hover:from-indigo-600 hover:to-violet-600 transition-all duration-500">
+                        <h1 className="font-heading text-2xl font-bold bg-gradient-to-r from-violet-400 via-purple-400 to-indigo-400 dark:from-violet-300 dark:via-purple-300 dark:to-indigo-300 bg-clip-text text-transparent hover:from-indigo-400 hover:via-purple-400 hover:to-violet-400 dark:hover:from-indigo-300 dark:hover:via-purple-300 dark:hover:to-violet-300 transition-all duration-500 relative group">
                             Jacksen-blog
+                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-violet-400 via-purple-400 to-indigo-400 dark:from-violet-300 dark:via-purple-300 dark:to-indigo-300 group-hover:w-full transition-all duration-700"></span>
                         </h1>
                     </Link>
                     <div className="hidden md:flex items-center space-x-2">
-                        <Link href="/" className="py-2 px-4 text-gray-700 dark:text-gray-200 rounded-full hover:bg-gradient-to-r hover:from-violet-500/10 hover:to-indigo-500/10 transition-all duration-300">Home</Link>
-                        <Link href="/blog" className="py-2 px-4 text-gray-700 dark:text-gray-200 rounded-full hover:bg-gradient-to-r hover:from-violet-500/10 hover:to-indigo-500/10 transition-all duration-300">Blog</Link>
-                        <Link href="/about" className="py-2 px-4 text-gray-700 dark:text-gray-200 rounded-full hover:bg-gradient-to-r hover:from-violet-500/10 hover:to-indigo-500/10 transition-all duration-300">About</Link>
+                        <Link href="/" className="py-2 px-4 text-gray-700 dark:text-gray-100 rounded-full hover:bg-white/10 dark:hover:bg-white/5 transition-all duration-300">Home</Link>
+                        <Link href="/blog" className="py-2 px-4 text-gray-700 dark:text-gray-100 rounded-full hover:bg-white/10 dark:hover:bg-white/5 transition-all duration-300">Blog</Link>
+                        <Link href="/about" className="py-2 px-4 text-gray-700 dark:text-gray-100 rounded-full hover:bg-white/10 dark:hover:bg-white/5 transition-all duration-300">About</Link>
                         
-                        {/* 主题切换按钮 */}
                         <button
                             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                            className="p-2 rounded-full hover:bg-gradient-to-r hover:from-violet-500/10 hover:to-indigo-500/10 transition-all duration-300"
+                            className="p-2 rounded-full hover:bg-white/10 dark:hover:bg-white/5 transition-all duration-300"
                             aria-label="Toggle Dark Mode"
                         >
                             {mounted && (theme === 'dark' ? (
@@ -74,10 +73,10 @@ export default function Navbar() {
                     isOpen ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0 pointer-events-none'
                 }`}
             >
-                <div className="px-2 pt-2 pb-3 space-y-1 bg-white/75 dark:bg-gray-900/75 backdrop-blur-md shadow-lg">
-                    <Link href="/" className="block px-4 py-2 text-sm text-gray-700 rounded-lg hover:bg-gradient-to-r hover:from-violet-500/10 hover:to-indigo-500/10 transition-all duration-300">Home</Link>
-                    <Link href="/blog" className="block px-4 py-2 text-sm text-gray-700 rounded-lg hover:bg-gradient-to-r hover:from-violet-500/10 hover:to-indigo-500/10 transition-all duration-300">Blog</Link>
-                    <Link href="/about" className="block px-4 py-2 text-sm text-gray-700 rounded-lg hover:bg-gradient-to-r hover:from-violet-500/10 hover:to-indigo-500/10 transition-all duration-300">About</Link>
+                <div className="px-2 pt-2 pb-3 space-y-1">
+                    <Link href="/" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-100 rounded-lg hover:bg-white/10 dark:hover:bg-white/5 transition-all duration-300">Home</Link>
+                    <Link href="/blog" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-100 rounded-lg hover:bg-white/10 dark:hover:bg-white/5 transition-all duration-300">Blog</Link>
+                    <Link href="/about" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-100 rounded-lg hover:bg-white/10 dark:hover:bg-white/5 transition-all duration-300">About</Link>
                 </div>
             </div>
         </nav>
