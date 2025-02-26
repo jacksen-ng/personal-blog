@@ -24,6 +24,7 @@ const config: Config = {
       },
       animation: {
         'blob': 'blob 7s infinite',
+        'fade-in': 'fade-in 0.8s ease-out forwards'
       },
       keyframes: {
         blob: {
@@ -40,6 +41,16 @@ const config: Config = {
             transform: 'translate(0px, 0px) scale(1)',
           },
         },
+        'fade-in': {
+          '0%': { 
+            opacity: '0', 
+            transform: 'translateY(20px)' 
+          },
+          '100%': { 
+            opacity: '1', 
+            transform: 'translateY(0)' 
+          }
+        }
       },
       backgroundImage: {
         'grid-slate-200': 'linear-gradient(to right, rgb(226 232 240 / 0.1) 1px, transparent 1px), linear-gradient(to bottom, rgb(226 232 240 / 0.1) 1px, transparent 1px)',
@@ -48,7 +59,9 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 };
 
 export default config;
