@@ -59,14 +59,16 @@ export async function getPostData(id: string): Promise<PostData> {
     };
 }
 
-export function getAllPostIds() {
+export async function getAllPostIds() {
     const fileNames = fs.readdirSync(postsDirectory);
     
-    return fileNames.map(fileName => {
-        return {
-        params: {
-            id: fileName.replace(/\.md$/, '')
-        }
-        };
-    });
+    return fileNames
+        .filter(fileName => fileName.endsWith('.md'))
+        .map(fileName => {
+            return {
+                params: {
+                    id: fileName.replace(/\.md$/, '')
+                }
+            };
+        });
 }
