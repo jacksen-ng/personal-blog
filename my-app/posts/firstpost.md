@@ -4,6 +4,8 @@ date: '2024-02-26'
 description: 'This blog is about learning Google Cloud Compute Engine'
 ---
 
+Language: English
+
 ## Create a Compute Engine Instance in Google Cloud
 
 - Open the Google Cloud Console
