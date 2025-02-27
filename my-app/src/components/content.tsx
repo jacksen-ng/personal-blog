@@ -33,7 +33,7 @@ export default function Content() {
                         text-zinc-600 dark:text-zinc-300
                         max-w-2xl
                         opacity-0 animate-fade-in">
-                        exploring tech, design & creative coding
+                        share my thoughts, ideas, and experiences
                     </p>
 
                     <a href="/blog" 
