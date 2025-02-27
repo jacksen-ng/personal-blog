@@ -4,20 +4,18 @@ import Post from "@/components/post";
 import { getAllPostIds, getPostData } from "@/app/lib/api";
 
 export async function generateStaticParams() {
-    const paths = getAllPostIds();
-    return paths;
+    const posts = await getAllPostIds();
+    return posts;
 }
 
 export default async function BlogPost({ params }: { params: { id: string } }) {
-    // Await the params object before accessing its properties
-    const resolvedParams = await params;
-    const postData = await getPostData(resolvedParams.id);
+    const postData = await getPostData(params.id);
     
     return (
         <main className="min-h-screen relative">
-        <Background />
-        <Navbar />
-        <Post postData={postData} />
+            <Background />
+            <Navbar />
+            <Post postData={postData} />
         </main>
     );
 }

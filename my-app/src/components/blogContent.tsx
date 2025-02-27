@@ -1,9 +1,17 @@
+"use client";
+import { useState } from "react";
 import GlassCard from "./glassCard";
 import Link from "next/link";
-import { getSortedPostsData } from "@/app/lib/api";
+import { PostData, PostListItem } from "@/app/lib/api";
+// Define the language options
+const LANGUAGE_OPTIONS = ["All", "English", "Chinese", "Japanese"];
 
-export default function BlogContent() {
-    const posts = getSortedPostsData();
+export default function BlogContent({ posts }: { posts: PostListItem[] }) {
+    const [selectedLanguage, setSelectedLanguage] = useState("All");
+    
+    const filteredPosts = selectedLanguage === "All" 
+        ? posts 
+        : posts.filter(post => post.language === selectedLanguage);
     
     return (
         <div className="container mx-auto px-4 pt-24 pb-12">
@@ -14,20 +22,37 @@ export default function BlogContent() {
                 Blog Posts
             </h1>
             
+            <div className="flex justify-center gap-3 mb-8">
+                {LANGUAGE_OPTIONS.map((language) => (
+                    <button
+                        key={language}
+                        onClick={() => setSelectedLanguage(language)}
+                        className={`px-4 py-2 rounded-full transition-all ${
+                            selectedLanguage === language
+                                ? "bg-violet-500 text-white"
+                                : "bg-violet-100 dark:bg-violet-900/30 text-violet-800 dark:text-violet-200 hover:bg-violet-200 dark:hover:bg-violet-800/50"
+                        }`}
+                    >
+                        {language}
+                    </button>
+                ))}
+            </div>
+            
             <div className="flex flex-col gap-6 max-w-3xl mx-auto">
-                {posts.map((post) => (
+                {filteredPosts.map((post) => (
                     <Link key={post.id} href={`/blog/${post.id}`}>
                         <GlassCard 
                             title={post.title} 
                             description={post.description} 
                             date={post.date}
+                            badge={post.language}
                         />
                     </Link>
                 ))}
                 
-                {posts.length === 0 && (
+                {filteredPosts.length === 0 && (
                     <p className="text-center text-gray-600 dark:text-gray-400">
-                        No blog posts found. Add some markdown files to the 'posts' directory.
+                        No blog posts found in {selectedLanguage} language.
                     </p>
                 )}
             </div>

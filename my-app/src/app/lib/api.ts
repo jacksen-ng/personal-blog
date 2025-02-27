@@ -1,3 +1,5 @@
+'use server';
+
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
@@ -6,15 +8,19 @@ import html from 'remark-html';
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 
-export type PostData = {
+export type PostListItem = {
     id: string;
     title: string;
     date: string;
     description: string;
+    language?: string;
+};
+
+export type PostData = PostListItem & {
     contentHtml: string;
 };
 
-export function getSortedPostsData() {
+export async function getSortedPostsData(): Promise<PostListItem[]> {
     const fileNames = fs.readdirSync(postsDirectory);
     const allPostsData = fileNames
         .filter(fileName => fileName.endsWith('.md'))
@@ -25,9 +31,20 @@ export function getSortedPostsData() {
         const fileContents = fs.readFileSync(fullPath, 'utf8');
 
         const matterResult = matter(fileContents);
+        
+        const contentLines = matterResult.content.split('\n');
+        let language = 'English';
+        
+        for (const line of contentLines) {
+            if (line.startsWith('Language:')) {
+                language = line.replace('Language:', '').trim();
+                break;
+            }
+        }
 
         return {
             id,
+            language,
             ...matterResult.data as { title: string; date: string; description: string }
         };
         });
@@ -47,6 +64,16 @@ export async function getPostData(id: string): Promise<PostData> {
 
     const matterResult = matter(fileContents);
 
+    const contentLines = matterResult.content.split('\n');
+    let language = 'English';
+    
+    for (const line of contentLines) {
+        if (line.startsWith('Language:')) {
+            language = line.replace('Language:', '').trim();
+            break;
+        }
+    }
+
     const processedContent = await remark()
         .use(html)
         .process(matterResult.content);
@@ -55,6 +82,7 @@ export async function getPostData(id: string): Promise<PostData> {
     return {
         id,
         contentHtml,
+        language,
         ...matterResult.data as { title: string; date: string; description: string }
     };
 }

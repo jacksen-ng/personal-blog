@@ -7,6 +7,7 @@ description: 'This blog is about learning Google Cloud Compute Engine'
 Language: English
 
 ## Create a Compute Engine Instance in Google Cloud
+----
 
 - Open the Google Cloud Console
 - Click on the "Compute Engine" link in the left-hand sidebar
@@ -15,6 +16,7 @@ Language: English
 - Click on the "Create" button
 
 ## SSH into Compute Engine instance(In browser)
+----
 
 - Open the Google Cloud Console
 - Click on the "Compute Engine" link in the left-hand sidebar
@@ -23,6 +25,7 @@ Language: English
 - Enter the password you set for the instance when you created it
 
 ## SSH into Compute Engine instance(In local terminal)
+----
 
 - Create a ssh key in local machine
 
@@ -46,6 +49,7 @@ ssh ubuntu@<your-instance-ip>
 ```
 
 ## Use gcloud command to connect to the instance
+----
 
 - Install Google Cloud SDK
 

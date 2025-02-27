@@ -11,13 +11,21 @@ export default function Post({ postData }: { postData: PostData }) {
             {postData.title}
             </h1>
             
-            <div className="mb-8">
-            <time className="text-sm px-3 py-1 rounded-full 
-                dark:bg-violet-500/10 bg-violet-500/10 
-                dark:text-violet-300 text-violet-600
-                font-medium">
-                {postData.date}
-            </time>
+            <div className="mb-8 flex items-center gap-3">
+                <time className="text-sm px-3 py-1 rounded-full 
+                    dark:bg-violet-500/10 bg-violet-500/10 
+                    dark:text-violet-300 text-violet-600
+                    font-medium">
+                    {postData.date}
+                </time>
+                
+                {postData.language && (
+                    <span className="text-sm px-3 py-1 rounded-full 
+                        bg-indigo-100 dark:bg-indigo-900/50 
+                        text-indigo-700 dark:text-indigo-300 font-medium">
+                        {postData.language}
+                    </span>
+                )}
             </div>
             
             <div className="prose prose-lg dark:prose-invert max-w-none 
