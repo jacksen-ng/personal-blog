@@ -9,7 +9,8 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogPost({ params }: { params: { id: string } }) {
-    const postData = await getPostData(params.id);
+    const resolvedParams = await params;
+    const postData = await getPostData(resolvedParams.id);
     
     return (
         <main className="min-h-screen relative">
