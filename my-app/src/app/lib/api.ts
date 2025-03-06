@@ -74,9 +74,12 @@ export async function getPostData(id: string): Promise<PostData> {
         }
     }
 
+    let content = matterResult.content;
+    content = content.replace(/!\[(.*?)\]\((blog-images\/.*?)\)/g, '![$1](/$2)');
+
     const processedContent = await remark()
         .use(html)
-        .process(matterResult.content);
+        .process(content);
     const contentHtml = processedContent.toString();
 
     return {
