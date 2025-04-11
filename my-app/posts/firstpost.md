@@ -1,6 +1,6 @@
 ---
 title: 'Learning Google Cloud Compute Engine'
-date: '2024-02-26'
+date: '2025-01-20'
 description: 'This blog is about learning Google Cloud Compute Engine'
 ---
 

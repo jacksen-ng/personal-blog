@@ -2,13 +2,14 @@
 
 import { useState } from 'react';
 import { TypeAnimation } from 'react-type-animation';
+import Link from 'next/link';
 
 export default function Content() {
     const [showContent, setShowContent] = useState(false);
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center px-4">
-            <h1 className="font-creative text-6xl md:text-7xl lg:text-8xl text-center mb-6
+            <h1 className="font-creative text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-center mb-4 sm:mb-6
                 bg-gradient-to-r from-fuchsia-500 to-cyan-500
                 dark:from-fuchsia-300 dark:to-cyan-300
                 bg-clip-text text-transparent
@@ -29,16 +30,16 @@ export default function Content() {
 
             {showContent && (
                 <>
-                    <p className="font-geist-sans text-lg md:text-xl text-center mb-12
+                    <p className="font-geist-sans text-base sm:text-lg md:text-xl text-center mb-8 sm:mb-12
                         text-zinc-600 dark:text-zinc-300
                         max-w-2xl
                         opacity-0 animate-fade-in">
                         share my thoughts, ideas, and experiences
                     </p>
 
-                    <a href="/blog" 
+                    <Link href="/blog" 
                         className="group relative inline-flex items-center justify-center
-                        px-8 py-3 text-lg font-medium
+                        px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg font-medium
                         text-zinc-700 dark:text-zinc-200
                         transition-all duration-300
                         hover:text-zinc-900 dark:hover:text-white
@@ -56,7 +57,7 @@ export default function Content() {
                             dark:via-purple-300
                             scale-x-0 group-hover:scale-x-100 
                             transition-transform duration-500"/>
-                    </a>
+                    </Link>
                 </>
             )}
 

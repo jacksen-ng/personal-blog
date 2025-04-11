@@ -69,11 +69,11 @@ export default function Navbar() {
             </div>
 
             <div 
-                className={`md:hidden transform transition-all duration-300 ease-in-out ${
-                    isOpen ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0 pointer-events-none'
-                }`}
+                className={`md:hidden fixed left-0 right-0 transform transition-all duration-300 ease-in-out ${
+                    isOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'
+                } bg-white/80 dark:bg-zinc-900/80 backdrop-blur-lg border-b border-zinc-200 dark:border-zinc-700/60`}
             >
-                <div className="px-2 pt-2 pb-3 space-y-1">
+                <div className="px-4 py-3 space-y-1">
                     <Link href="/" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-100 rounded-lg hover:bg-white/10 dark:hover:bg-white/5 transition-all duration-300">Home</Link>
                     <Link href="/blog" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-100 rounded-lg hover:bg-white/10 dark:hover:bg-white/5 transition-all duration-300">Blog</Link>
                     <Link href="/about" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-100 rounded-lg hover:bg-white/10 dark:hover:bg-white/5 transition-all duration-300">About</Link>

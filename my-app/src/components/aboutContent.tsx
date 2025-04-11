@@ -12,7 +12,7 @@ const techStack = [
 
 export default function AboutContent() {
     return (
-        <div className="container mx-auto px-4 py-16">
+        <div className="container mx-auto px-4 pt-28 md:pt-16 pb-12">
             {/* Introduction Section */}
             <section className="mb-20">
                 <h1 className="text-4xl md:text-5xl font-bold mb-10 text-center 
@@ -26,7 +26,7 @@ export default function AboutContent() {
                     <p className="text-lg md:text-xl text-center
                         text-zinc-600 dark:text-zinc-300
                         opacity-0 animate-fade-in [animation-delay:200ms]">
-                        I'm a Malaysian which is currently studying in Tokyo, Japan. This blog
+                        I&apos;m a Malaysian which is currently studying in Tokyo, Japan. This blog
                         is a place where I share my thoughts, ideas, and experiences. In this blog,
                         I will share my learning journey, my thoughts on technology, and my life in Japan.
                     </p>
@@ -39,7 +39,7 @@ export default function AboutContent() {
                     bg-gradient-to-r from-violet-500 to-indigo-500 
                     dark:from-violet-300 dark:to-indigo-300 
                     bg-clip-text text-transparent">
-                    Blog's Tech Stack
+                    Blog&apos;s Tech Stack
                 </h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">

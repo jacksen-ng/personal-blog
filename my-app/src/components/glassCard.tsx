@@ -12,10 +12,10 @@ export default function GlassCard({
     return (
         <div className="group backdrop-blur-md bg-white/30 dark:bg-zinc-900/40 
             border border-zinc-200 dark:border-zinc-700/60
-            p-6 rounded-xl shadow-sm hover:shadow-md hover:bg-white/50 dark:hover:bg-zinc-800/50
+            p-4 sm:p-6 rounded-xl shadow-sm hover:shadow-md hover:bg-white/50 dark:hover:bg-zinc-800/50
             transition duration-300 ease-in-out">
-            <div className="flex justify-between items-start mb-2">
-                <h2 className="text-xl font-semibold text-zinc-800 dark:text-zinc-100 group-hover:text-violet-600 
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 sm:gap-0 mb-2">
+                <h2 className="text-lg sm:text-xl font-semibold text-zinc-800 dark:text-zinc-100 group-hover:text-violet-600 
                     dark:group-hover:text-violet-400 transition-colors duration-200">
                     {title}
                 </h2>
@@ -23,7 +23,8 @@ export default function GlassCard({
                 {badge && (
                     <span className="text-xs px-2 py-1 rounded-full 
                         bg-indigo-100 dark:bg-indigo-900/50 
-                        text-indigo-700 dark:text-indigo-300 font-medium">
+                        text-indigo-700 dark:text-indigo-300 font-medium
+                        self-start">
                         {badge}
                     </span>
                 )}
@@ -31,10 +32,11 @@ export default function GlassCard({
 
             <p className="text-zinc-600 dark:text-zinc-400 text-sm mb-3">{description}</p>
             
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0">
                 <time className="text-xs px-2 py-1 rounded-full 
                     bg-violet-100/70 dark:bg-violet-900/30 
-                    text-violet-700 dark:text-violet-300 font-medium">
+                    text-violet-700 dark:text-violet-300 font-medium
+                    self-start">
                     {date}
                 </time>
                 
