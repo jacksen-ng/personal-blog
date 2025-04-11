@@ -12,3 +12,5 @@
 - Blog **URL**: https://jacksen-blog.vercel.app/
 
 - Blog using languages: English, Chinese, Japanese
+
+- About this blog: Hosting at Google Compute Engine and Vercel
