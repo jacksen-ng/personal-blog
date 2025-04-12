@@ -14,8 +14,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Jacksen-blog",
-  description: "Jacksen-blog",
+  title: "Jacksen's Blog",
+  description: "Welcome to Jacksen's personal blog",
+  metadataBase: new URL('https://jacksen-blog.com'),
+  alternates: {
+    canonical: 'https://jacksen-blog.com',
+  },
 };
 
 export default function RootLayout({
