@@ -5,15 +5,6 @@ const nextConfig: NextConfig = {
   images: {
     domains: ['jacksen-blog.com', 'www.jacksen-blog.com'],
   },
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: 'https://www.jacksen-blog.com',
-        permanent: true,
-      },
-    ];
-  },
 };
 
 export default nextConfig;

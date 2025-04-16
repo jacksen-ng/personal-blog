@@ -1,6 +1,6 @@
 'use server';
 
-import fs from 'fs';
+import fs from 'fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
@@ -21,47 +21,46 @@ export type PostData = PostListItem & {
 };
 
 export async function getSortedPostsData(): Promise<PostListItem[]> {
-    const fileNames = fs.readdirSync(postsDirectory);
-    const allPostsData = fileNames
-        .filter(fileName => fileName.endsWith('.md'))
-        .map(fileName => {
-        const id = fileName.replace(/\.md$/, '');
+    const fileNames = await fs.readdir(postsDirectory);
+    const allPostsData = await Promise.all(
+        fileNames
+            .filter(fileName => fileName.endsWith('.md'))
+            .map(async fileName => {
+                const id = fileName.replace(/\.md$/, '');
+                const fullPath = path.join(postsDirectory, fileName);
+                const fileContents = await fs.readFile(fullPath, 'utf8');
+                const matterResult = matter(fileContents);
+                
+                const contentLines = matterResult.content.split('\n');
+                let language = 'English';
+                
+                for (const line of contentLines) {
+                    if (line.startsWith('Language:')) {
+                        language = line.replace('Language:', '').trim();
+                        break;
+                    }
+                }
 
-        const fullPath = path.join(postsDirectory, fileName);
-        const fileContents = fs.readFileSync(fullPath, 'utf8');
-
-        const matterResult = matter(fileContents);
-        
-        const contentLines = matterResult.content.split('\n');
-        let language = 'English';
-        
-        for (const line of contentLines) {
-            if (line.startsWith('Language:')) {
-                language = line.replace('Language:', '').trim();
-                break;
-            }
-        }
-
-        return {
-            id,
-            language,
-            ...matterResult.data as { title: string; date: string; description: string }
-        };
-        });
+                return {
+                    id,
+                    language,
+                    ...matterResult.data as { title: string; date: string; description: string }
+                };
+            })
+    );
         
     return allPostsData.sort((a, b) => {
         if (a.date < b.date) {
-        return 1;
+            return 1;
         } else {
-        return -1;
+            return -1;
         }
     });
 }
 
 export async function getPostData(id: string): Promise<PostData> {
     const fullPath = path.join(postsDirectory, `${id}.md`);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-
+    const fileContents = await fs.readFile(fullPath, 'utf8');
     const matterResult = matter(fileContents);
 
     const contentLines = matterResult.content.split('\n');
@@ -91,7 +90,7 @@ export async function getPostData(id: string): Promise<PostData> {
 }
 
 export async function getAllPostIds() {
-    const fileNames = fs.readdirSync(postsDirectory);
+    const fileNames = await fs.readdir(postsDirectory);
     
     return fileNames
         .filter(fileName => fileName.endsWith('.md'))

@@ -8,12 +8,11 @@ export async function generateStaticParams() {
     return posts;
 }
 
-// Temporarily use 'any' type to bypass type checking
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default async function BlogPost(props: any) {
-    const { params } = props;
-    const postData = await getPostData(params.id);
-    
+export default async function BlogPost({ params }: { params: { id: string } }) {
+    // Ensure we're working with the resolved params
+    const resolvedParams = await Promise.resolve(params);
+    const postData = await getPostData(resolvedParams.id);
+
     return (
         <main className="min-h-screen relative">
             <Background />
