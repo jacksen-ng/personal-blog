@@ -5,6 +5,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
+import remarkGfm from 'remark-gfm';
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 
@@ -77,6 +78,7 @@ export async function getPostData(id: string): Promise<PostData> {
     content = content.replace(/!\[(.*?)\]\((blog-images\/.*?)\)/g, '![$1](/$2)');
 
     const processedContent = await remark()
+        .use(remarkGfm)
         .use(html)
         .process(content);
     const contentHtml = processedContent.toString();

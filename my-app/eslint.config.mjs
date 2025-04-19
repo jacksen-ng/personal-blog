@@ -1,16 +1,18 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import { eslintrc } from '@eslint/eslintrc';
+import nextPlugin from 'eslint-config-next';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
+const { FlatCompat } = eslintrc;
 const compat = new FlatCompat({
-  baseDirectory: __dirname,
+  baseDirectory: new URL('.', import.meta.url).pathname,
+  recommendedConfig: nextPlugin.configs.recommended,
 });
 
-const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+export default [
+  ...compat.config(nextPlugin),
+  {
+    rules: {
+      '@typescript-eslint/no-unused-vars': 'off',
+      '@next/next/no-page-custom-font': 'off',
+    },
+  },
 ];
-
-export default eslintConfig;

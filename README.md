@@ -9,7 +9,7 @@
     - **Participate in Hackathon**
     - **Learning About Deep Learning**
 
-- Blog **URL**: https://jacksen-blog.vercel.app/
+- Blog **URL**: https://www.jacksen-blog.com/
 
 - Blog using languages: English, Chinese, Japanese
 

@@ -9,9 +9,7 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogPost({ params }: { params: { id: string } }) {
-    // Ensure we're working with the resolved params
-    const resolvedParams = await Promise.resolve(params);
-    const postData = await getPostData(resolvedParams.id);
+    const postData = await getPostData(params.id);
 
     return (
         <main className="min-h-screen relative">
