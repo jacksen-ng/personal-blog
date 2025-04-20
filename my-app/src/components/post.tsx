@@ -1,4 +1,6 @@
 import { PostData } from "@/app/lib/api";
+import PostEngagement from "./PostEngagement";
+import PostStats from "./PostStats";
 
 export default function Post({ postData }: { postData: PostData }) {
     return (
@@ -26,6 +28,8 @@ export default function Post({ postData }: { postData: PostData }) {
                         {postData.language}
                     </span>
                 )}
+                
+                <PostStats postId={postData.id} />
             </div>
             
             <div className="prose prose-lg dark:prose-invert max-w-none 
@@ -35,6 +39,8 @@ export default function Post({ postData }: { postData: PostData }) {
             prose-pre:bg-zinc-100 dark:prose-pre:bg-zinc-800
             transition-colors duration-300"
             dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
+            
+            <PostEngagement postId={postData.id} />
         </article>
         </div>
     );

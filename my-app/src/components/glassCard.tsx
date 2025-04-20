@@ -1,13 +1,17 @@
+import PostStats from './PostStats';
+
 export default function GlassCard({ 
     title, 
     description, 
     date,
-    badge
+    badge,
+    postId
 }: { 
     title: string; 
     description: string; 
     date: string;
     badge?: string;
+    postId: string;
 }) {
     return (
         <div className="group backdrop-blur-md bg-white/30 dark:bg-zinc-900/40 
@@ -33,12 +37,14 @@ export default function GlassCard({
             <p className="text-zinc-600 dark:text-zinc-400 text-sm mb-3">{description}</p>
             
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0">
-                <time className="text-xs px-2 py-1 rounded-full 
-                    bg-violet-100/70 dark:bg-violet-900/30 
-                    text-violet-700 dark:text-violet-300 font-medium
-                    self-start">
-                    {date}
-                </time>
+                <div className="flex items-center gap-3">
+                    <time className="text-xs px-2 py-1 rounded-full 
+                        bg-violet-100/70 dark:bg-violet-900/30 
+                        text-violet-700 dark:text-violet-300 font-medium">
+                        {date}
+                    </time>
+                    <PostStats postId={postId} />
+                </div>
                 
                 <span className="text-violet-500 dark:text-violet-400 text-sm font-medium opacity-0 
                     group-hover:opacity-100 transform translate-x-0 group-hover:translate-x-1

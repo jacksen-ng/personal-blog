@@ -46,6 +46,7 @@ export default function BlogContent({ posts }: { posts: PostListItem[] }) {
                             description={post.description} 
                             date={post.date}
                             badge={post.language}
+                            postId={post.id}
                         />
                     </Link>
                 ))}
