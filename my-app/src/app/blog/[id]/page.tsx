@@ -11,6 +11,19 @@ export async function generateStaticParams() {
 export default async function BlogPost({ params }: { params: { id: string } }) {
     const postData = await getPostData(params.id);
 
+    if (!postData) {
+        return (
+            <main className="min-h-screen relative">
+                <Background />
+                <Navbar />
+                <div className="container mx-auto px-4 pt-24 pb-12 text-center">
+                    <h1 className="text-2xl font-bold">Post not found</h1>
+                    <p>Sorry, we couldn't find the blog post you were looking for.</p>
+                </div>
+            </main>
+        );
+    }
+
     return (
         <main className="min-h-screen relative">
             <Background />

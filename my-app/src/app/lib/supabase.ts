@@ -3,6 +3,14 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
+console.log("Attempting to initialize Supabase client...");
+console.log("Supabase URL loaded:", supabaseUrl ? "YES" : "NO_OR_EMPTY");
+console.log("Supabase Anon Key loaded:", supabaseAnonKey ? "YES" : "NO_OR_EMPTY");
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error("CRITICAL: Supabase URL or Anon Key is missing or empty. Data fetching will likely fail.");
+}
+
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     persistSession: true,
