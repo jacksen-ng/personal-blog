@@ -1,13 +1,9 @@
 'use server';
 
-import fs from 'fs/promises';
-import path from 'path';
-import matter from 'gray-matter';
+import { supabase } from './supabase';
 import { remark } from 'remark';
 import html from 'remark-html';
 import remarkGfm from 'remark-gfm';
-
-const postsDirectory = path.join(process.cwd(), 'posts');
 
 export type PostListItem = {
     id: string;
@@ -22,85 +18,78 @@ export type PostData = PostListItem & {
 };
 
 export async function getSortedPostsData(): Promise<PostListItem[]> {
-    const fileNames = await fs.readdir(postsDirectory);
-    const allPostsData = await Promise.all(
-        fileNames
-            .filter(fileName => fileName.endsWith('.md'))
-            .map(async fileName => {
-                const id = fileName.replace(/\.md$/, '');
-                const fullPath = path.join(postsDirectory, fileName);
-                const fileContents = await fs.readFile(fullPath, 'utf8');
-                const matterResult = matter(fileContents);
-                
-                const contentLines = matterResult.content.split('\n');
-                let language = 'English';
-                
-                for (const line of contentLines) {
-                    if (line.startsWith('Language:')) {
-                        language = line.replace('Language:', '').trim();
-                        break;
-                    }
-                }
+    const { data: posts, error } = await supabase
+        .from('posts')
+        .select('id, title, date, description, language')
+        .eq('is_published', true)
+        .order('date', { ascending: false });
 
-                return {
-                    id,
-                    language,
-                    ...matterResult.data as { title: string; date: string; description: string }
-                };
-            })
-    );
-        
-    return allPostsData.sort((a, b) => {
-        if (a.date < b.date) {
-            return 1;
-        } else {
-            return -1;
-        }
-    });
-}
-
-export async function getPostData(id: string): Promise<PostData> {
-    const fullPath = path.join(postsDirectory, `${id}.md`);
-    const fileContents = await fs.readFile(fullPath, 'utf8');
-    const matterResult = matter(fileContents);
-
-    const contentLines = matterResult.content.split('\n');
-    let language = 'English';
-    
-    for (const line of contentLines) {
-        if (line.startsWith('Language:')) {
-            language = line.replace('Language:', '').trim();
-            break;
-        }
+    if (error) {
+        console.error('Error fetching sorted posts data:', error);
+        return [];
     }
 
-    let content = matterResult.content;
-    content = content.replace(/!\[(.*?)\]\((blog-images\/.*?)\)/g, '![$1](/$2)');
+    if (!posts) {
+        return [];
+    }
+
+    return posts.map(post => ({
+        id: post.id,
+        title: post.title,
+        date: post.date,
+        description: post.description,
+        language: post.language || 'English',
+    }));
+}
+
+export async function getPostData(id: string): Promise<PostData | null> {
+    const { data: post, error } = await supabase
+        .from('posts')
+        .select('id, title, date, description, language, content_md')
+        .eq('id', id)
+        .eq('is_published', true)
+        .single();
+
+    if (error || !post) {
+        console.error('Error fetching post data for id:', id, error);
+        return null;
+    }
+
+    let contentMarkdown = post.content_md || '';
+    contentMarkdown = contentMarkdown.replace(/!\[(.*?)\]\((blog-images\/.*?)\)/g, '![$1](/$2)');
 
     const processedContent = await remark()
         .use(remarkGfm)
         .use(html)
-        .process(content);
+        .process(contentMarkdown);
     const contentHtml = processedContent.toString();
 
     return {
-        id,
+        id: post.id,
+        title: post.title,
+        date: post.date,
+        description: post.description,
+        language: post.language || 'English',
         contentHtml,
-        language,
-        ...matterResult.data as { title: string; date: string; description: string }
     };
 }
 
 export async function getAllPostIds() {
-    const fileNames = await fs.readdir(postsDirectory);
+    const { data: posts, error } = await supabase
+        .from('posts')
+        .select('id')
+        .eq('is_published', true);
+
+    if (error || !posts) {
+        console.error('Error fetching all post ids:', error);
+        return [];
+    }
     
-    return fileNames
-        .filter(fileName => fileName.endsWith('.md'))
-        .map(fileName => {
-            return {
-                params: {
-                    id: fileName.replace(/\.md$/, '')
-                }
-            };
-        });
+    return posts.map(post => {
+        return {
+            params: {
+                id: post.id,
+            },
+        };
+    });
 }
