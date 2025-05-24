@@ -13,4 +13,4 @@
 
 - Blog using languages: English, Chinese, Japanese
 
-- About this blog: Hosting at Google Compute Engine and Vercel
+- About this blog: Hosting at Vercel and use Supabase to saving the data
