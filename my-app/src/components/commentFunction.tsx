@@ -3,7 +3,8 @@ import { useState, useEffect, useCallback } from "react";
 import { FiMessageSquare, FiSend } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/providers/AuthProvider";
-import { supabase, ensureProfile } from "@/app/lib/supabase";
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { ensureProfile } from "@/app/lib/supabase";
 
 type Comment = {
     id: string;
@@ -25,6 +26,9 @@ export default function CommentFunction({ postId }: CommentFunctionProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [commentCount, setCommentCount] = useState<number | null>(null);
+
+    // Create a Supabase client that uses cookies
+    const supabase = createClientComponentClient();
 
     const loadComments = useCallback(async () => {
         if (!showComments) return;

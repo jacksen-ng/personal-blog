@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
@@ -11,19 +12,21 @@ if (!supabaseUrl || !supabaseAnonKey) {
   console.error("CRITICAL: Supabase URL or Anon Key is missing or empty. Data fetching will likely fail.");
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+// Client-side Supabase client that uses cookies for auth storage
+export const supabase = createClientComponentClient();
+
+// Legacy client for non-auth operations (if needed)
+export const supabaseClient = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
-    persistSession: true,
-    autoRefreshToken: true,
-    storageKey: 'blog-auth-storage',
-    storage: typeof window !== 'undefined' ? localStorage : undefined,
+    persistSession: false, // Disable session persistence for this client
+    autoRefreshToken: false,
   },
 });
 
 export const isAdmin = async (userId: string | undefined) => {
   if (!userId) return false;
   
-  const { data, error } = await supabase
+  const { data, error } = await supabaseClient
     .from('profiles')
     .select('is_admin')
     .eq('user_id', userId)
@@ -37,7 +40,9 @@ export const isAdmin = async (userId: string | undefined) => {
   return data.is_admin === true;
 };
 
+// For client-side use
 export const getCurrentUser = async () => {
+  const supabase = createClientComponentClient();
   const { data: { user } } = await supabase.auth.getUser();
   return user;
 }; 
@@ -45,7 +50,7 @@ export const getCurrentUser = async () => {
 export const ensureProfile = async (userId: string) => {
   if (!userId) return null;
   
-  const { data, error } = await supabase
+  const { data, error } = await supabaseClient
     .from('profiles')
     .select('*')
     .eq('user_id', userId)
@@ -55,7 +60,7 @@ export const ensureProfile = async (userId: string) => {
     return data;
   }
   
-  const { data: newProfile, error: insertError } = await supabase
+  const { data: newProfile, error: insertError } = await supabaseClient
     .from('profiles')
     .insert({ user_id: userId })
     .select()

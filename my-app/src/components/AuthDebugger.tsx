@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useAuth } from "@/app/providers/AuthProvider";
-import { supabase } from "@/app/lib/supabase";
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 export default function AuthDebugger() {
   const { user, isLoading } = useAuth();
@@ -10,6 +10,9 @@ export default function AuthDebugger() {
   const [profilesCount, setProfilesCount] = useState<number | null>(null);
   const [profileInfo, setProfileInfo] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
+
+  // Create a Supabase client that uses cookies
+  const supabase = createClientComponentClient();
 
   useEffect(() => {
     const checkTables = async () => {

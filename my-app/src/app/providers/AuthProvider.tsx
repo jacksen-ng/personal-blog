@@ -2,7 +2,8 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { User } from '@supabase/supabase-js';
-import { supabase, isAdmin } from '@/app/lib/supabase';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { isAdmin } from '@/app/lib/supabase';
 
 type AuthContextType = {
   user: User | null;
@@ -24,6 +25,9 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isUserAdmin, setIsUserAdmin] = useState(false);
+  
+  // Create a Supabase client that uses cookies
+  const supabase = createClientComponentClient();
 
   useEffect(() => {
     const initializeAuth = async () => {
@@ -62,7 +66,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     return () => {
       subscription.unsubscribe();
     };
-  }, []);
+  }, [supabase]);
 
   const signOut = async () => {
     await supabase.auth.signOut();

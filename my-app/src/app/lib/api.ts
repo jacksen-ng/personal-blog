@@ -1,6 +1,6 @@
 'use server';
 
-import { supabase } from './supabase';
+import { supabaseClient } from './supabase';
 import { remark } from 'remark';
 import html from 'remark-html';
 import remarkGfm from 'remark-gfm';
@@ -18,7 +18,7 @@ export type PostData = PostListItem & {
 };
 
 export async function getSortedPostsData(): Promise<PostListItem[]> {
-    const { data: posts, error } = await supabase
+    const { data: posts, error } = await supabaseClient
         .from('posts')
         .select('id, title, date, description, language')
         .eq('is_published', true)
@@ -43,7 +43,7 @@ export async function getSortedPostsData(): Promise<PostListItem[]> {
 }
 
 export async function getPostData(id: string): Promise<PostData | null> {
-    const { data: post, error } = await supabase
+    const { data: post, error } = await supabaseClient
         .from('posts')
         .select('id, title, date, description, language, content_md')
         .eq('id', id)
@@ -75,7 +75,7 @@ export async function getPostData(id: string): Promise<PostData | null> {
 }
 
 export async function getAllPostIds() {
-    const { data: posts, error } = await supabase
+    const { data: posts, error } = await supabaseClient
         .from('posts')
         .select('id')
         .eq('is_published', true);

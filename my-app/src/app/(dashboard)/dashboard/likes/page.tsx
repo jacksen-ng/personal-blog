@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { supabase } from "@/app/lib/supabase";
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 type LikeWithDetails = {
   id: string;
@@ -13,6 +13,9 @@ type LikeWithDetails = {
 export default function LikesPage() {
   const [likes, setLikes] = useState<LikeWithDetails[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Create a Supabase client that uses cookies
+  const supabase = createClientComponentClient();
 
   useEffect(() => {
     const fetchLikes = async () => {

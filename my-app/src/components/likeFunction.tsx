@@ -4,7 +4,8 @@ import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/providers/AuthProvider";
-import { supabase, ensureProfile } from "@/app/lib/supabase";
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { ensureProfile } from "@/app/lib/supabase";
 
 type LikeFunctionProps = {
     postId: string;
@@ -17,6 +18,9 @@ export default function LikeFunction({ postId }: LikeFunctionProps) {
     const [likeCount, setLikeCount] = useState<number | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
+    // Create a Supabase client that uses cookies
+    const supabase = createClientComponentClient();
 
     const loadLikeStatus = useCallback(async () => {
         try {
