@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { supabase } from "@/app/lib/supabase";
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import Link from "next/link";
 
 type PostStats = {
@@ -15,6 +15,9 @@ export default function DashboardPage() {
   const [totalLikes, setTotalLikes] = useState(0);
   const [totalComments, setTotalComments] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Create a Supabase client that uses cookies
+  const supabase = createClientComponentClient();
 
   useEffect(() => {
     const fetchStats = async () => {

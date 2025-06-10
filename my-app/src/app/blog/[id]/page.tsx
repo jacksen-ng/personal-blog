@@ -8,8 +8,9 @@ export async function generateStaticParams() {
     return posts;
 }
 
-export default async function BlogPost({ params }: { params: { id: string } }) {
-    const postData = await getPostData(params.id);
+export default async function BlogPost({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    const postData = await getPostData(id);
 
     if (!postData) {
         return (

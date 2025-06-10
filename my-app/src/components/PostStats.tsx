@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback } from "react";
 import { FiHeart, FiMessageSquare } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
 import { useAuth } from "@/app/providers/AuthProvider";
-import { supabase } from "@/app/lib/supabase";
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 type PostStatsProps = {
   postId: string;
@@ -15,6 +15,9 @@ export default function PostStats({ postId }: PostStatsProps) {
   const [commentCount, setCommentCount] = useState<number | null>(null);
   const [liked, setLiked] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Create a Supabase client that uses cookies
+  const supabase = createClientComponentClient();
 
   const loadStats = useCallback(async () => {
     setIsLoading(true);

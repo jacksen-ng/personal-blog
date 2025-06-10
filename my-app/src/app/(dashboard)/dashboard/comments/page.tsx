@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { supabase } from "@/app/lib/supabase";
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 type CommentWithDetails = {
   id: string;
@@ -14,6 +14,9 @@ type CommentWithDetails = {
 export default function CommentsPage() {
   const [comments, setComments] = useState<CommentWithDetails[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Create a Supabase client that uses cookies
+  const supabase = createClientComponentClient();
 
   useEffect(() => {
     const fetchComments = async () => {

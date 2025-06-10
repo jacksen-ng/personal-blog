@@ -3,12 +3,15 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FaGoogle, FaGithub, FaApple } from 'react-icons/fa';
-import { supabase } from '@/app/lib/supabase';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 export default function LoginPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  
+  // Create a Supabase client that uses cookies
+  const supabase = createClientComponentClient();
 
   const signInWithProvider = async (provider: 'google' | 'github' | 'apple') => {
     try {
