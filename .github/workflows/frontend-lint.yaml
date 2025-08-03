@@ -14,6 +14,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20.17.0
+          cache: "npm"
+          cache-dependency-path: my-app/package-lock.json
 
       - name: Install dependencies
         working-directory: my-app
