@@ -1,14 +1,8 @@
-import { eslintrc } from '@eslint/eslintrc';
-import nextPlugin from 'eslint-config-next';
+import nextConfig from 'eslint-config-next';
 
-const { FlatCompat } = eslintrc;
-const compat = new FlatCompat({
-  baseDirectory: new URL('.', import.meta.url).pathname,
-  recommendedConfig: nextPlugin.configs.recommended,
-});
-
-export default [
-  ...compat.config(nextPlugin),
+/** @type {import('eslint').Linter.FlatConfig[]} */
+const config = [
+  nextConfig,
   {
     rules: {
       '@typescript-eslint/no-unused-vars': 'off',
@@ -16,3 +10,5 @@ export default [
     },
   },
 ];
+
+export default config;
