@@ -1,0 +1,52 @@
+name: Backend Lint
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.24.5
+
+      - name: Cache Go modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('backend/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Install dependencies
+        working-directory: ./backend
+        run: go mod download
+
+      - name: Format check
+        working-directory: ./backend
+        run: test -z "$(gofmt -s -l .)" || (echo "Run gofmt!" && exit 1)
+
+      - name: Vet
+        working-directory: ./backend
+        run: go vet ./...
+
+      - name: Lint
+        working-directory: ./backend
+        run: |
+          go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.56.2
+          golangci-lint run --timeout=5m ./...
+
+      - name: Test
+        working-directory: ./backend
+        run: go test -v ./...
+
+      - name: Build
+        working-directory: ./backend
+        run: go build ./...
