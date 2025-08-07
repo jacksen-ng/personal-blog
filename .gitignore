@@ -7,3 +7,4 @@ blog-images
 .vercel
 supabase
 docs
+.env.development
